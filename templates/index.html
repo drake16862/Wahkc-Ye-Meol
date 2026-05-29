@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Wahkc Ye Meol</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <h1>Wahkc Ye Meol</h1>
+
+    <h2 id="score">Score: 0</h2>
+
+    <h2 id="timer">Time: 30</h2>
+
+    <button onclick="startGame()">
+        Start Game
+    </button>
+
+
+    <div class="board">
+
+        <div class="hole" onclick="whack(0)">
+            <div class="mole" id="mole0"></div>
+        </div>
+
+        <div class="hole" onclick="whack(1)">
+            <div class="mole" id="mole1"></div>
+        </div>
+
+        <div class="hole" onclick="whack(2)">
+            <div class="mole" id="mole2"></div>
+        </div>
+
+        <div class="hole" onclick="whack(3)">
+            <div class="mole" id="mole3"></div>
+        </div>
+
+        <div class="hole" onclick="whack(4)">
+            <div class="mole" id="mole4"></div>
+        </div>
+
+        <div class="hole" onclick="whack(5)">
+            <div class="mole" id="mole5"></div>
+        </div>
+
+        <div class="hole" onclick="whack(6)">
+            <div class="mole" id="mole6"></div>
+        </div>
+
+        <div class="hole" onclick="whack(7)">
+            <div class="mole" id="mole7"></div>
+        </div>
+
+        <div class="hole" onclick="whack(8)">
+            <div class="mole" id="mole8"></div>
+        </div>
+
+    </div>
+
+<script>
+
+let score = 0
+let currentMole = -1
+let timeLeft = 30
+let gameRunning = false
+
+function startGame(){
+
+    score = 0
+    timeLeft = 30
+    gameRunning = true
+
+    document.getElementById("score").innerHTML = "Score: " + score
+    document.getElementById("timer").innerHTML = "Time: " + timeLeft
+
+    moveMole()
+
+    let timer = setInterval(function(){
+
+        timeLeft--
+
+        document.getElementById("timer").innerHTML = "Time: " + timeLeft
+
+        if(timeLeft <= 0){
+
+            clearInterval(timer)
+
+            gameRunning = false
+
+            alert("Game Over! Your Score is " + score)
+        }
+
+    }, 1000)
+}
+
+function moveMole(){
+
+    if(!gameRunning){
+        return
+    }
+
+    for(let i=0; i<9; i++){
+
+        document.getElementById("mole"+i).style.visibility = "hidden"
+    }
+
+    currentMole = Math.floor(Math.random() * 9)
+
+    document.getElementById("mole"+currentMole).style.visibility = "visible"
+
+    setTimeout(moveMole, 700)
+}
+
+function whack(number){
+
+    if(number == currentMole && gameRunning){
+
+        score++
+
+        document.getElementById("score").innerHTML = "Score: " + score
+
+        currentMole = -1
+    }
+}
+
+</script>
+
+</body>
+
+</html>
